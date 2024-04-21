@@ -67,7 +67,8 @@ function OrderPage() {
       const product_id = Number(order[1]);
       const product = await productStore.callStatic.storeProducts(product_id);
 
-      const imgUrl = product[3].replace("ipfs://", IPFS_GATEWAY);
+      let cid = product[3].split("/")[2];
+      const imgUrl = "https://" + cid + IPFS_GATEWAY;
 
       if (order !== undefined) {
         setOrderState({

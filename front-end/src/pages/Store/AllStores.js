@@ -20,7 +20,7 @@ import StoreContract from "../../artifacts/contracts/Store.json";
 import contractsAddress from "../../artifacts/deployments/map.json";
 import networks from "../../utils/networksMap.json";
 
-const factoryAddress = contractsAddress["5777"]["StoreFactory"][0];
+const factoryAddress = contractsAddress["10200"]["StoreFactory"][0];
 const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
 
 const useStyles = makeStyles((theme) => ({
@@ -59,9 +59,9 @@ function AllStores() {
             signer
           );
           const storeDetailsURL = await productStore.callStatic.storeMetaData();
-          const metaUrl = storeDetailsURL.replace("ipfs://", IPFS_GATEWAY);
+          const metaUrl = "https://" + storeDetailsURL.split("/")[2] + IPFS_GATEWAY;
           const meta = await axios.get(metaUrl);
-          const imgUrl = meta.data.image.replace("ipfs://", IPFS_GATEWAY);
+          const imgUrl = "https://" + meta.data.image.split("/")[2] + IPFS_GATEWAY;
           let item = {
             address: store.storeAddress,
             name: meta.data.name,
@@ -86,7 +86,7 @@ function AllStores() {
   }
 
   // ganache network is used for testing purposes
-  const currentNetwork = networks["1337"];
+  const currentNetwork = networks["10200"];
   const isGoodNet = data.network === currentNetwork;
   const isConnected = data.account !== "";
 

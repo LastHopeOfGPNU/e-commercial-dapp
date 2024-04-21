@@ -1,0 +1,12 @@
+{
+  "contracts": {
+    "Administration": "891c088a0dfa507340fae1a1b1564a61aee587d3",
+    "AuctionMarket": "b3ce6bac6dcd5a4033e7253c3c8f2a55fdefce69",
+    "Market": "c8e5f6a1944083f6d9f07a71cbeb43b2cdf94cd0",
+    "MockV3Aggregator": "9e734e161b5cafcca52a917f10266f5a8bc05b28",
+    "Store": "386e402d79dd3aa4a685fb4f033d0daa011c5361",
+    "StoreFactory": "a8acfcd4579a80f9393b2fc93afdcd738a5473d3"
+  },
+  "tests": {},
+  "tx": {}
+}

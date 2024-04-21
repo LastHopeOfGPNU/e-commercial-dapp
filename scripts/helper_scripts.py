@@ -39,7 +39,7 @@ def get_contract(_contract, contract_address):
 def deploy_mock():
 
     DECIMALS = 8
-    INIT_VAL = 3000 * 10**8
+    INIT_VAL = 1 * 10**8
     
     account = get_account()
 

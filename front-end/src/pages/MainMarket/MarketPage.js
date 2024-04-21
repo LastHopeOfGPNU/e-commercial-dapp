@@ -20,8 +20,8 @@ import StoreContract from "../../artifacts/contracts/Store.json";
 import contractsAddress from "../../artifacts/deployments/map.json";
 import networks from "../../utils/networksMap.json";
 
-const Marketaddress = contractsAddress["5777"]["Market"][0];
-const factoryAddress = contractsAddress["5777"]["StoreFactory"][0];
+const Marketaddress = contractsAddress["10200"]["Market"][0];
+const factoryAddress = contractsAddress["10200"]["StoreFactory"][0];
 
 const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
 
@@ -49,12 +49,14 @@ function MarketPage() {
       MarketContract.abi,
       signer
     );
-    const products = await market.getAllProducts();
 
+    const products = await market.getAllProducts();
     const inSaleProducts = products.filter((p) => p[8] === 1);
+    console.log(products)
 
     const _marketProducts = inSaleProducts.map((p) => {
-      const imgUrl = p[4].replace("ipfs://", IPFS_GATEWAY);
+      let cid = p[4].split("/")[2];
+      const imgUrl = "https://" + cid + IPFS_GATEWAY;
       let item = {
         productId: Number(p[0]),
         name: p[2],
@@ -83,7 +85,8 @@ function MarketPage() {
         const _storeProducts = await productStore.listStoreProducts();
 
         _storeProducts.map((p) => {
-          const imgUrl = p[3].replace("ipfs://", IPFS_GATEWAY);
+          let cid = p[3].split("/")[2];
+          const imgUrl = "https://" + cid + IPFS_GATEWAY;
           let item = {
             store: store.storeAddress,
             productId: Number(p[0]),
@@ -117,7 +120,7 @@ function MarketPage() {
   }
 
   // ganache network is used for testing purposes
-  const currentNetwork = networks["1337"];
+  const currentNetwork = networks["10200"];
   const isGoodNet = data.network === currentNetwork;
   const isConnected = data.account !== "";
 

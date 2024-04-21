@@ -14,9 +14,9 @@ import StoreContract from "../artifacts/contracts/Store.json";
 import contractsAddress from "../artifacts/deployments/map.json";
 import networks from "../utils/networksMap.json";
 
-const Marketaddress = contractsAddress["5777"]["Market"][0];
-const factoryAddress = contractsAddress["5777"]["StoreFactory"][0];
-const auctionContractAddress = contractsAddress["5777"]["AuctionMarket"][0];
+const Marketaddress = contractsAddress["10200"]["Market"][0];
+const factoryAddress = contractsAddress["10200"]["StoreFactory"][0];
+const auctionContractAddress = contractsAddress["10200"]["AuctionMarket"][0];
 const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
 
 const useStyles = makeStyles((theme) => ({
@@ -51,13 +51,10 @@ function Home() {
     if (openAuctions !== undefined) {
       const items = await Promise.all(
         openAuctions.map(async (auction) => {
-          const metadataUrl = auction[2].replace("ipfs://", IPFS_GATEWAY);
+          const metadataUrl = "https://" + auction[2].split("/")[2] + IPFS_GATEWAY;
           let itemMetaData = await axios.get(metadataUrl);
 
-          const imgUrl = itemMetaData.data.image.replace(
-            "ipfs://",
-            IPFS_GATEWAY
-          );
+          const imgUrl = "https://" + itemMetaData.data.image.split("/")[2] + IPFS_GATEWAY;
 
           let item = {
             auctionId: Number(auction[0]),
@@ -80,11 +77,14 @@ function Home() {
       signer
     );
     const products = await market.getAllProducts();
+    console.log(products)
 
     const inSaleProducts = products.filter((p) => p[8] === 1);
 
     const _marketProducts = inSaleProducts.map((p) => {
-      const imgUrl = p[4].replace("ipfs://", IPFS_GATEWAY);
+      let cid = p[4].split("/")[2];
+      const imgUrl = "https://" + cid + IPFS_GATEWAY;
+      console.log(imgUrl)
       let item = {
         productId: Number(p[0]),
         name: p[2],
@@ -113,7 +113,8 @@ function Home() {
         const _storeProducts = await productStore.listStoreProducts();
 
         _storeProducts.map((p) => {
-          const imgUrl = p[3].replace("ipfs://", IPFS_GATEWAY);
+          let cid = p[3].split("/")[2];
+          const imgUrl = "https://" + cid + IPFS_GATEWAY;
           let item = {
             store: store.storeAddress,
             productId: Number(p[0]),
@@ -143,9 +144,11 @@ function Home() {
             signer
           );
           const storeDetailsURL = await productStore.callStatic.storeMetaData();
-          const metadataUrl = storeDetailsURL.replace("ipfs://", IPFS_GATEWAY);
+          let cid = storeDetailsURL.split("/")[2];
+          const metadataUrl = "https://" + cid + IPFS_GATEWAY;
           let meta = await axios.get(metadataUrl);
-          const imgUrl = meta.data.image.replace("ipfs://", IPFS_GATEWAY);
+          cid = meta.data.image.split("/")[2];
+          const imgUrl = "https://" + cid + IPFS_GATEWAY;
           let item = {
             address: store.storeAddress,
             name: meta.data.name,
@@ -159,7 +162,7 @@ function Home() {
   }
 
   // ganache network is used for testing purposes
-  const currentNetwork = networks["1337"];
+  const currentNetwork = networks["10200"];
   const isGoodNet = data.network === currentNetwork;
   const isConnected = data.account !== "";
 

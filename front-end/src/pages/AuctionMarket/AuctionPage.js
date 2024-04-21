@@ -14,7 +14,7 @@ import AuctionContract from "../../artifacts/contracts/AuctionMarket.json";
 import contractsAddress from "../../artifacts/deployments/map.json";
 
 const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
-const auctionContractAddress = contractsAddress["5777"]["AuctionMarket"][0];
+const auctionContractAddress = contractsAddress["10200"]["AuctionMarket"][0];
 
 const auctionStatusMap = { 0: "OPEN", 1: "ENDED" };
 
@@ -64,9 +64,9 @@ function AuctionPage() {
       const _isBidder = Number(utils.formatUnits(_userBid)) !== 0;
       setIsBidder(_isBidder);
 
-      const metadataUrl = details[2].replace("ipfs://", IPFS_GATEWAY);
+      const metadataUrl = "https://" + details[2].split("/")[2] + IPFS_GATEWAY
       let metaData = await axios.get(metadataUrl);
-      const imgUrl = metaData.data.image.replace("ipfs://", IPFS_GATEWAY);
+      const imgUrl = "https://" + metaData.data.image.split("/")[2] + IPFS_GATEWAY
 
       convertPrice(utils.formatUnits(details[5])).then((res) => {
         setAuctionState({

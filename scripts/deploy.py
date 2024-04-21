@@ -4,10 +4,10 @@ from scripts.helper_scripts import get_account, LOCAL_BLOCKCHAINS, deploy_mock
 def deploy():
     admin = get_account()
 
-    if network.show_active() in LOCAL_BLOCKCHAINS:
-        price_feed = deploy_mock()
+    # if network.show_active() in LOCAL_BLOCKCHAINS:
+    price_feed = deploy_mock()
 
-    administration = Administration.deploy(price_feed.address, {"from": admin})
+    administration = Administration.deploy(price_feed, {"from": admin})
 
     market = Market.deploy(administration.address, {"from": admin})
 

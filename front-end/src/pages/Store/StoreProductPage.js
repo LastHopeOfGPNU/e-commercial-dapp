@@ -77,7 +77,8 @@ function StoreProductPage() {
       const storeOwner = await productStore.callStatic.owner();
       const details = await productStore.callStatic.storeProducts(product_id);
 
-      const imgUrl = details[3].replace("ipfs://", IPFS_GATEWAY);
+      let cid = details[3].split("/")[2];
+      const imgUrl = "https://" + cid + IPFS_GATEWAY;
 
       convertPrice(utils.formatUnits(details[4])).then((res) => {
         setProductState({

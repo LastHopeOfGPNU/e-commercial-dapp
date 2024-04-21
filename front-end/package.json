@@ -20,6 +20,7 @@
     "crypto-js": "^4.2.0",
     "dotenv": "^16.4.5",
     "ethers": "^5.5.2",
+    "fs": "^0.0.1-security",
     "moment": "^2.29.1",
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",

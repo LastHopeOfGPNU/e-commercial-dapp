@@ -19,7 +19,7 @@ import AuctionContract from "../../artifacts/contracts/AuctionMarket.json";
 import contractsAddress from "../../artifacts/deployments/map.json";
 import networks from "../../utils/networksMap.json";
 
-const auctionContractAddress = contractsAddress["5777"]["AuctionMarket"][0];
+const auctionContractAddress = contractsAddress["10200"]["AuctionMarket"][0];
 const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
 
 const auctionStatusMap = { OPEN: 0, ENDED: 1 };
@@ -58,7 +58,8 @@ function AuctionMarketPage() {
         openAuctions.map(async (auction) => {
           const metadataUrl = auction[2].replace("ipfs://", IPFS_GATEWAY);
           let metaData = await axios.get(metadataUrl);
-          const imgUrl = metaData.data.image.replace("ipfs://", IPFS_GATEWAY);
+          let cid = metaData.data.image.split("/")[2];
+          const imgUrl = "https://" + cid + IPFS_GATEWAY;
 
           let item = {
             auctionId: Number(auction[0]),
@@ -85,7 +86,7 @@ function AuctionMarketPage() {
   }
 
   // ganache network is used for testing purposes
-  const currentNetwork = networks["1337"];
+  const currentNetwork = networks["10200"];
   const isGoodNet = data.network === currentNetwork;
   const isConnected = data.account !== "";
 

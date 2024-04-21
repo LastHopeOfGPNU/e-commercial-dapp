@@ -25,7 +25,7 @@ import StoreContract from "../../artifacts/contracts/Store.json";
 import contractsAddress from "../../artifacts/deployments/map.json";
 import networks from "../../utils/networksMap.json";
 
-const factoryAddress = contractsAddress["5777"]["StoreFactory"][0];
+const factoryAddress = contractsAddress["10200"]["StoreFactory"][0];
 
 const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
 
@@ -186,7 +186,9 @@ function MyStore() {
 
       if (storeInSaleProducts !== undefined) {
         const items = storeInSaleProducts.map((p) => {
-          const imgUrl = p[3].replace("ipfs://", IPFS_GATEWAY);
+          console.log(p)
+          let cid = p[3].split("/")[2];
+          const imgUrl = "https://" + cid + IPFS_GATEWAY;
           let item = {
             productId: Number(p[0]),
             name: p[1],
@@ -273,7 +275,7 @@ function MyStore() {
   }, [storeInSaleProducts.length, data.account]);
 
   // ganache network is used for testing purposes
-  const currentNetwork = networks["1337"];
+  const currentNetwork = networks["10200"];
   const isGoodNet = data.network === currentNetwork;
   const isConnected = data.account !== "";
 

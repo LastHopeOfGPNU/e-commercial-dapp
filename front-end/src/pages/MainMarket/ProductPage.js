@@ -12,7 +12,7 @@ import MarketContract from "../../artifacts/contracts/Market.json";
 import contractsAddress from "../../artifacts/deployments/map.json";
 
 const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
-const Marketaddress = contractsAddress["5777"]["Market"][0];
+const Marketaddress = contractsAddress["10200"]["Market"][0];
 
 const statusMap = { 1: "IN SALE", 2: "PENDING", 3: "SENT", 4: "SOLD" };
 
@@ -52,7 +52,8 @@ function ProductPage() {
       );
       const details = await market.callStatic.products(product_id);
 
-      const imgUrl = details[4].replace("ipfs://", IPFS_GATEWAY);
+      let cid = details[4].split("/")[2];
+      const imgUrl = "https://" + cid + IPFS_GATEWAY;
 
       convertPrice(utils.formatUnits(details[5])).then((res) => {
         setProductState({

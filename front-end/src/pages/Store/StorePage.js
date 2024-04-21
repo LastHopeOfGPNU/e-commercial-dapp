@@ -47,7 +47,8 @@ function StorePage() {
     const storeInSaleProducts = products.filter((p) => p[1] !== "");
 
     const items = storeInSaleProducts.map((p) => {
-      const imgUrl = p[3].replace("ipfs://", IPFS_GATEWAY);
+      let cid = p[3].split("/")[2];
+      const imgUrl = "https://" + cid + IPFS_GATEWAY;
       console.log(imgUrl);
       let item = {
         productId: Number(p[0]),
@@ -62,7 +63,7 @@ function StorePage() {
   }
 
   // ganache network is used for testing purposes
-  const currentNetwork = networks["1337"];
+  const currentNetwork = networks["10200"];
   const isGoodNet = data.network === currentNetwork;
   const isConnected = data.account !== "";
 

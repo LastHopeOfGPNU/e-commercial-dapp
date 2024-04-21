@@ -8,4 +8,5 @@ reports/
 .vscode
 .pytest_cache
 node_modules
-front-end/src/artifacts
+proof
+base64.exe

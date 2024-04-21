@@ -1,0 +1,19 @@
+{
+  "10200": {
+    "Administration": [
+      "0xa8026F81D3b5A478ab6D208104573F496a611559"
+    ],
+    "AuctionMarket": [
+      "0x7dB04C608Da45B209fAB7f8Fe00e92Cf9702Af2F"
+    ],
+    "Market": [
+      "0x3B9c3c4CF8d8f7f1180bd6033e1EC7045F1aAAfB"
+    ],
+    "MockV3Aggregator": [
+      "0x17aFeC76b1F5d3667EA342A5a4E74e08f11842B5"
+    ],
+    "StoreFactory": [
+      "0xbC29737DFBF58C7c77881035e8E6FEf89a4ed7f2"
+    ]
+  }
+}
